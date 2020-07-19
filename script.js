@@ -6,8 +6,8 @@ const storeName = "PPName";
 const storeScore = "PPMaxScore";
 const rod1Name = "Rod 1";
 const rod2Name = "Rod 2";
-const firstTime="firstTime";
-localStorage.setItem(firstTime,true);
+const firstTime = "firstTime";
+localStorage.setItem(firstTime, true);
 let hit = new Audio();
 let wall = new Audio();
 let userScore = new Audio();
@@ -17,7 +17,6 @@ hit.src = "sounds/hit.mp3";
 wall.src = "sounds/wall.mp3";
 comScore.src = "sounds/comScore.mp3";
 userScore.src = "sounds/userScore.mp3";
-
 
 let score,
   maxScore,
@@ -34,16 +33,16 @@ let windowWidth = window.innerWidth,
 (function () {
   rod = localStorage.getItem(storeName);
   maxScore = localStorage.getItem(storeScore);
-  let isFirstTime=localStorage.getItem(firstTime);
+  let isFirstTime = localStorage.getItem(firstTime);
   console.log(isFirstTime);
-  if (isFirstTime==="true")
-    {
-    alert("LET'S START \nPress Space or Enter to Start  \nUse A or D for left Right  \nOR \n<--Side Arrows-->");
+  if (isFirstTime === "true") {
+    alert(
+      "LET'S START \nPress Space or Enter to Start  \nUse A or D for left Right  \nOR \n<--Side Arrows-->"
+    );
     maxScore = 0;
     rod = "Rod1";
     localStorage.setItem(firstTime, false);
   } else {
-      
     alert(rod + " has maximum score of " + maxScore * 100);
   }
 
@@ -71,7 +70,7 @@ function resetBoard(rodName) {
 function storeWin(rod, score) {
   if (score > maxScore) {
     maxScore = score;
-    
+
     localStorage.setItem(storeName, rod);
     localStorage.setItem(storeScore, maxScore);
   }
@@ -91,8 +90,9 @@ function storeWin(rod, score) {
 
 window.addEventListener("keypress" && "keydown", function () {
   let rodSpeed = 20;
-        console.log(" I MA HEre" , event.code);
+  console.log(" key:", event.code);
   let rodRect = rod1.getBoundingClientRect();
+  console.log(rodRect);
 
   if (
     event.code === "KeyD" ||
@@ -109,7 +109,7 @@ window.addEventListener("keypress" && "keydown", function () {
     rod2.style.left = rod1.style.left;
   }
 
-  if (event.code === "Enter" || event.code==="Space") {
+  if (event.code === "Enter" || event.code === "Space") {
     if (!gameOn) {
       gameOn = true;
       let ballRect = ball.getBoundingClientRect();
@@ -135,11 +135,11 @@ window.addEventListener("keypress" && "keydown", function () {
 
         if (ballX + ballDia > windowWidth || ballX < 0) {
           ballSpeedX = -ballSpeedX; // Reverses the direction
-                wall.play();
+          wall.play();
         }
 
         // It specifies the center of the ball on the viewport
-        let ballPos = ballX + ballDia /2;
+        let ballPos = ballX + ballDia / 2;
 
         // Check for Rod 1
         if (ballY <= rod1Height) {
@@ -148,14 +148,14 @@ window.addEventListener("keypress" && "keydown", function () {
           hit.play();
 
           // Check if the game ends
-          if (ballPos < rod1X || ballPos> rod1X + rod1Width) {
+          if (ballPos < rod1X || ballPos > rod1X + rod1Width) {
             comScore.play();
             storeWin(rod1Name, score);
             console.log("ballPos11", ballPos);
             console.log("rod2x", rod2X);
             console.log("rod2width", rod2Width);
             storeWin(rod2Name, score);
-            // userScore.play();  
+            // userScore.play();
           }
         }
 
@@ -169,11 +169,10 @@ window.addEventListener("keypress" && "keydown", function () {
           if (ballPos < rod2X || ballPos > rod2X + rod2Width) {
             comScore.play();
             storeWin(rod1Name, score);
-           
+
             console.log("ballPos", ballPos);
             console.log("rod2x", rod2X);
             console.log("rod2width", rod2Width);
-
           }
         }
       }, 10);
